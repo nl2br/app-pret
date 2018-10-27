@@ -56,5 +56,10 @@ namespace app_pret
             }
 
         }
+
+        public void GetAllObject()
+        {
+            //TODO
+        }
     }
 }
