@@ -10,10 +10,7 @@ namespace app_pret
     {
         static void Main(string[] args)
         {
-            ObjetCollection o1 = new ObjetCollection(1,"star wars");
-            o1.AddObjet();
-            ObjetCollection o2 = new ObjetCollection(2, "greemlins");
-            o2.AddObjet();
+            Datas_environement.SetEnvironement();
         }
     }
 }

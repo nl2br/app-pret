@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="datas-environement.cs" />
+    <Compile Include="Emprunteur.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ObjetCollection.cs" />
     <Compile Include="pret.cs" />

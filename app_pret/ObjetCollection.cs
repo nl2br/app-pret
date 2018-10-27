@@ -16,7 +16,7 @@ namespace app_pret
         public string Nom;
         //protected string LieuStockage { get; set; }
         public Enums.StatutObjet Statut;
-        protected int NombreObjetColletion { get; set; }
+        private int NombreObjetColletion = 0;
 
         public ObjetCollection() {
             this.NombreObjetColletion++;
