@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Enums.cs" />
     <Compile Include="Objet.cs" />
+    <Compile Include="pret.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
