@@ -9,7 +9,7 @@ using System.IO;
 
 namespace app_pret
 {
-    public class Objet
+    public class ObjetCollection
     {
         public int ID;
         //protected string Categorie { get; set; }
@@ -18,25 +18,24 @@ namespace app_pret
         public Enums.StatutObjet Statut;
         protected int NombreObjetColletion { get; set; }
 
-        public Objet() {
+        public ObjetCollection() {
             this.NombreObjetColletion++;
         }
 
-        public Objet(int id, string nom, Enums.StatutObjet statut = Enums.StatutObjet.Disponible)
+        public ObjetCollection(int id, string nom, Enums.StatutObjet statut = Enums.StatutObjet.Disponible)
         {
             this.ID = id;
             this.Nom = nom;
             this.Statut = statut;
 
-
         }
 
-        public void GetObjet()
+        public void GetAllObjet()
         {
-            XmlSerializer xs = new XmlSerializer(typeof(Objet));
+            XmlSerializer xs = new XmlSerializer(typeof(ObjetCollection));
             using (StreamReader rd = new StreamReader("objet.xml"))
             {
-                Objet p = xs.Deserialize(rd) as Objet;
+                ObjetCollection p = xs.Deserialize(rd) as ObjetCollection;
                 Console.WriteLine("Id : {0}", p.ID);
                 Console.WriteLine("Nom : {0}", p.Nom);
             }
@@ -44,12 +43,12 @@ namespace app_pret
 
         public void AddObjet()
         {
-            Objet o = new Objet(this.ID, this.Nom, Enums.StatutObjet.Disponible);
+            ObjetCollection o = new ObjetCollection(this.ID, this.Nom, Enums.StatutObjet.Disponible);
 
             XmlDocument doc = new XmlDocument();
             doc.Load("objets.xml");
 
-            XmlSerializer xs = new XmlSerializer(typeof(Objet));
+            XmlSerializer xs = new XmlSerializer(typeof(ObjetCollection));
             using (StreamWriter sw = new StreamWriter("objets.xml"))
             {
                 xs.Serialize(sw, o);
@@ -57,9 +56,5 @@ namespace app_pret
 
         }
 
-        public void GetAllObject()
-        {
-            //TODO
-        }
     }
 }

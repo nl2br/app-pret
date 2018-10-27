@@ -10,9 +10,9 @@ namespace app_pret
     {
         static void Main(string[] args)
         {
-            Objet o1 = new Objet(1,"star wars");
+            ObjetCollection o1 = new ObjetCollection(1,"star wars");
             o1.AddObjet();
-            Objet o2 = new Objet(2, "greemlins");
+            ObjetCollection o2 = new ObjetCollection(2, "greemlins");
             o2.AddObjet();
         }
     }
