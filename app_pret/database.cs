@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace app_pret
 {
@@ -19,19 +22,20 @@ namespace app_pret
 
         public void Objets()
         {
-            ObjetCollection objet1 = new ObjetCollection(1, "star wars", Enums.StatutObjet.Emprunte);
-            ObjetCollection objet2 = new ObjetCollection(2, "Greemlins", Enums.StatutObjet.Disponible);
-            ObjetCollection objet3 = new ObjetCollection(3, "retour vers le futur", Enums.StatutObjet.Emprunte);
-
-            var objets = new List<ObjetCollection>() { objet1, objet2, objet3 };
+            List<ObjetCollection> objets = new List<ObjetCollection> {
+                new ObjetCollection(1, "star wars", Enums.StatutObjet.Emprunte),
+                new ObjetCollection(2, "Greemlins", Enums.StatutObjet.Disponible),
+                new ObjetCollection(3, "retour vers le futur", Enums.StatutObjet.Emprunte)
+            };
 
             this.DBObjets = objets;
+
+
         }
 
         public void Emprunteurs()
         {
-            List<Emprunteur> emprunteurs = new List<Emprunteur>
-            {
+            List<Emprunteur> emprunteurs = new List<Emprunteur> {
                 new Emprunteur(1, "Jean"),
                 new Emprunteur(2, "Lenny"),
                 new Emprunteur(3, "Christophe")
