@@ -24,7 +24,7 @@ namespace app_pret
 
             foreach (ObjetCollection objet in listObjets)
             {
-                Console.WriteLine("id: {0}, nom: {1}, statut: {3}", objet.ID, objet.Nom, objet.Statut);
+                Console.WriteLine("id: {0}, nom: {1}, statut: {2}", objet.ID, objet.Nom, objet.Statut);
             }
             Console.WriteLine("Nombre d'objets : {0}", listObjets.Count);
 

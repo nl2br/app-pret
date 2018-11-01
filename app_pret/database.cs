@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace app_pret
 {
+
+    // TODO Singleton pour éviter d'avoir +ieurs instances
+    // TODO ADD REMOVE GET SET
     class Database
     {
         public List<ObjetCollection> DBObjets { get; set; }
@@ -15,6 +18,7 @@ namespace app_pret
         {
             Objets();
             Emprunteurs();
+            
         }
 
         public void Objets()
