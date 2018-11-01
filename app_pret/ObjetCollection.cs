@@ -30,31 +30,86 @@ namespace app_pret
 
         }
 
-        public void GetAllObjet()
+        public static List<ObjetCollection> GetAllObjet()
         {
-            XmlSerializer xs = new XmlSerializer(typeof(ObjetCollection));
-            using (StreamReader rd = new StreamReader("objet.xml"))
+            XmlSerializer xs = new XmlSerializer(typeof(List<ObjetCollection>));
+            using (StreamReader rd = new StreamReader("objets.xml"))
             {
-                ObjetCollection p = xs.Deserialize(rd) as ObjetCollection;
-                Console.WriteLine("Id : {0}", p.ID);
-                Console.WriteLine("Nom : {0}", p.Nom);
+                return xs.Deserialize(rd) as List<ObjetCollection>;
             }
         }
 
-        public void AddObjet()
+        public static void AddObjet(ObjetCollection objet)
         {
-            ObjetCollection o = new ObjetCollection(this.ID, this.Nom, Enums.StatutObjet.Disponible);
+            var allObjets = new List<ObjetCollection>();
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load("objets.xml");
-
-            XmlSerializer xs = new XmlSerializer(typeof(ObjetCollection));
-            using (StreamWriter sw = new StreamWriter("objets.xml"))
+            if (!File.Exists("objets.xml"))
             {
-                xs.Serialize(sw, o);
+                var fl = File.Create("objets.xml");
+                fl.Close();
+            }
+            else
+            {
+                // recupérer tous les objets du fichier XML
+                allObjets = GetAllObjet();
             }
 
+            allObjets.Add(objet);
+
+            // recréer le fichier XML avec les anciennes données + la nouvelle
+            using (var fs = new FileStream("objets.xml", FileMode.Create))
+            {
+                var xs = new XmlSerializer(typeof(List<ObjetCollection>));
+                xs.Serialize(fs, allObjets);
+            }
         }
 
+        public static void AddObjet(List<ObjetCollection> objets)
+        {
+            var allObjets = new List<ObjetCollection>();
+
+            if (!File.Exists("objets.xml"))
+            {
+                var fl = File.Create("objets.xml");
+                fl.Close();
+            }
+            else
+            {
+                // recupérer tous les objets du fichier XML
+                allObjets = GetAllObjet();
+            }
+
+            foreach(var objet in objets)
+            {
+                allObjets.Add(objet);
+            }
+            
+            // recréer le fichier XML avec les anciennes données + les nouvelles
+            using (var fs = new FileStream("objets.xml", FileMode.Create))
+            {
+                var xs = new XmlSerializer(typeof(List<ObjetCollection>));
+                xs.Serialize(fs, allObjets);
+            }
+        }
+
+        public static void RemoveObjet(int id)
+        {
+            List<ObjetCollection> objets = GetAllObjet();
+
+            for(var i = 0; i < objets.Count; i++)
+            {
+                if(objets[i].ID == id)
+                {
+                    objets.Remove(objets[i]);
+                }
+            }
+
+            // recréer le fichier XML avec les anciennes données - la nouvelle
+            using (var fs = new FileStream("objets.xml", FileMode.Create))
+            {
+                var xs = new XmlSerializer(typeof(List<ObjetCollection>));
+                xs.Serialize(fs, objets);
+            }
+        }
     }
 }
