@@ -6,22 +6,42 @@ using System.Threading.Tasks;
 
 namespace app_pret
 {
-    class Emprunteur
+    public class Emprunteur
     {
-        public int ID { get;  set; }
-        public string Name { get;  set; }
-        private int NombreEmprunteur {get; set;}
+        public int Id { get;  set; }
+        public string Nom { get;  set; }
+        public string Prenom { get;  set; }
+        public string Mail { get;  set; }
 
+        private Emprunteur() { }
 
-        private Emprunteur()
+        public Emprunteur(string nom, string prenom, string mail)
         {
-            this.NombreEmprunteur++;
+            this.Id = GetAll().Count + 1; ;
+            this.Nom = nom;
+            this.Prenom = prenom;
+            this.Mail = mail;
         }
 
-        public Emprunteur(int id, string name)
+        public static List<Emprunteur> GetAll()
         {
-            this.ID = id;
-            this.Name = name;
+            return Database<Emprunteur>.GetAll();
+        }
+
+        public static void Add(Emprunteur objet)
+        {
+            Database<Emprunteur>.Create(objet);
+        }
+
+        public static void Remove(int id)
+        {
+            Database<Emprunteur>.Delete(id);
+        }
+
+        public static Emprunteur GetById(int id)
+        {
+            List<Emprunteur> items = GetAll();
+            return items.Find(x => x.Id == id);
         }
     }
 }

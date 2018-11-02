@@ -12,40 +12,63 @@ namespace app_pret
 
     // TODO Singleton pour éviter d'avoir +ieurs instances
     // TODO ADD REMOVE GET SET
-    class Database
+    public class Database<T>
     {
-        public List<ObjetCollection> DBObjets { get; set; }
-        public List<Emprunteur> DBEmprunteurs { get; set; }
-
-        public void SetEnvironement()
+        public static void Create(T objet)
         {
-            Objets();
-            Emprunteurs();
-            
+            var all = new List<T>();
+
+
+            if (!File.Exists(typeof(T).Name + ".xml"))
+            {
+                var fl = File.Create(typeof(T).Name + ".xml");
+                fl.Close();
+            }
+            else
+            {
+                // recupérer tous les objets du fichier XML
+                all = GetAll();
+            }
+
+            all.Add(objet);
+
+            // recréer le fichier XML avec les anciennes données + la nouvelle
+            using (var fs = new FileStream(typeof(T).Name + ".xml", FileMode.Create))
+            {
+                var xs = new XmlSerializer(typeof(List<T>));
+                xs.Serialize(fs, all);
+            }
         }
 
-        public void Objets()
+        public static List<T> GetAll()
         {
-            List<ObjetCollection> objets = new List<ObjetCollection> {
-                new ObjetCollection(1, "star wars", Enums.StatutObjet.Emprunte),
-                new ObjetCollection(2, "Greemlins", Enums.StatutObjet.Disponible),
-                new ObjetCollection(3, "retour vers le futur", Enums.StatutObjet.Emprunte)
-            };
-
-            this.DBObjets = objets;
-
-
+            if (File.Exists(typeof(T).Name + ".xml"))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+                using (StreamReader rd = new StreamReader(typeof(T).Name + ".xml"))
+                {
+                    return xs.Deserialize(rd) as List<T>;
+                }
+            }
+            else
+            {
+                return new List<T>();
+            }
         }
 
-        public void Emprunteurs()
+        public static void Delete(int id)
         {
-            List<Emprunteur> emprunteurs = new List<Emprunteur> {
-                new Emprunteur(1, "Jean"),
-                new Emprunteur(2, "Lenny"),
-                new Emprunteur(3, "Christophe")
-            };
+            List<T> items = GetAll();
 
-            this.DBEmprunteurs = emprunteurs;
+            items.RemoveAt(id-1);
+
+            // recréer le fichier XML avec les anciennes données - la nouvelle
+            using (var fs = new FileStream(typeof(T).Name + ".xml", FileMode.Create))
+            {
+                var xs = new XmlSerializer(typeof(List<T>));
+                xs.Serialize(fs, items);
+            }
         }
+
     }
 }
